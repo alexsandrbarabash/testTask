@@ -15,7 +15,7 @@ router.get('/',
     return CashiersController.getAllCashiers(req, res);
   });
 
-router.get('/:id', (req: Request, res: Response) => {
+router.get('getOne/:id', (req: Request, res: Response) => {
   return CashiersController.getCashier(req, res);
 });
 
@@ -41,5 +41,16 @@ router.put('/:id',
 router.delete('/:id', (req: Request, res: Response) => {
   return CashiersController.deleteCashiers(req, res);
 });
+
+router.get('/getTargetCashiers1',
+  (req: Request, res: Response) => {
+    return CashiersController.getTargetCashiersFirst1(res);
+  });
+
+router.get('/getTargetCashiers2',
+  (req: Request, res: Response) => {
+    return CashiersController.getTargetCashiers2(res);
+  });
+
 
 export default router;
