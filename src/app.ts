@@ -17,12 +17,15 @@ app.use((err: Error, req: Request, res: Response) => {
   res.json({message: 'Sorry it`s our problem'});
 });
 
+
 app.listen(PORT, () => {
   console.log(`Server start on PORT:${PORT}`);
   sequelize.authenticate().then(() => {
     console.log('DB connected');
     return sequelize.sync({force: false})
-  }).catch((e: Error) => {
+  }).then(
+
+  ).catch((e: Error) => {
     console.log(e.message);
   });
 });

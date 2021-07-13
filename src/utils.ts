@@ -1,5 +1,5 @@
 import { check } from 'express-validator';
-import { Sex } from './const';
+import { Sex, Shift, Week } from './const';
 
 const cashiersCreateValidator = () => [
   check('first_name').isString().trim().notEmpty(),
@@ -7,7 +7,25 @@ const cashiersCreateValidator = () => [
   check('sex').isIn([Sex.Man, Sex.Woman]),
   check('shop').isString().trim().notEmpty(),
   check('birthday').isISO8601(),
-  check('salary').isNumeric()
+  check('salary').isNumeric(),
+  check('city').isString().trim().notEmpty(),
+  check('previousWork').isString().trim().notEmpty(),
+  check('address').isString().trim().notEmpty(),
+  check('startWorking').isISO8601(),
+  check('shift').isIn([Shift.Night, Shift.Day]),
+  check('isEvenDay').isBoolean(),
+  check('weekDay')
+  .isIn([
+    Week.Monday,
+    Week.Tuesday,
+    Week.Wednesday,
+    Week.Thursday,
+    Week.Friday,
+    Week.Saturday,
+    Week.Sunday
+  ]),
+
+
 ];
 
 const cashiersUpdateValidator = () => [
@@ -16,7 +34,23 @@ const cashiersUpdateValidator = () => [
   check('sex').if(check('sex').exists()).isIn([Sex.Man, Sex.Woman]),
   check('shop').if(check('shop').exists()).isString().trim(),
   check('birthday').if(check('birthday').exists()).isISO8601(),
-  check('salary').if(check('salary').exists()).isNumeric()
+  check('salary').if(check('salary').exists()).isNumeric(),
+  check('city').if(check('city').exists()).isString().trim().notEmpty(),
+  check('previousWork').if(check('previousWork').exists()).isString().trim().notEmpty(),
+  check('address').if(check('address').exists()).isString().trim().notEmpty(),
+  check('startWorking').if(check('startWorking').exists()).isISO8601(),
+  check('shift').if(check('shift').exists()).isIn([Shift.Night, Shift.Day]),
+  check('isEvenDay').if(check('isEvenDay').exists()).isBoolean(),
+  check('weekDay').if(check('weekDay').exists())
+  .isIn([
+    Week.Monday,
+    Week.Tuesday,
+    Week.Wednesday,
+    Week.Thursday,
+    Week.Friday,
+    Week.Saturday,
+    Week.Sunday
+  ]),
 ];
 
 const cashiersGetValidator = () => [

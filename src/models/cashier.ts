@@ -1,5 +1,5 @@
-import { Sex } from '../const';
-import { Table, Column, PrimaryKey, AutoIncrement, AllowNull, Model } from 'sequelize-typescript';
+import { Table, Column, PrimaryKey, AutoIncrement, AllowNull, Model, Default } from 'sequelize-typescript';
+import { Sex, Shift, Week } from '../const';
 
 interface ICashier {
   id: number;
@@ -9,6 +9,13 @@ interface ICashier {
   sex: Sex;
   salary: number;
   shop: string;
+  city: string;
+  startWorking: Date;
+  shift: Shift;
+  previousWork: string;
+  address: string;
+  isEvenDay: boolean;
+  weekDay: Week
 }
 
 @Table({
@@ -45,6 +52,33 @@ class Cashier extends Model implements ICashier {
   @Column
   shop!: string;
 
+  @AllowNull(false)
+  @Column
+  city!: string;
+
+  @AllowNull(false)
+  @Column
+  startWorking!: Date;
+
+  @AllowNull(false)
+  @Column
+  shift!: Shift;
+
+  @AllowNull(true)
+  @Column
+  previousWork!: string;
+
+  @AllowNull(false)
+  @Column
+  address!: string;
+
+  @Default(true)
+  @Column
+  isEvenDay!: boolean
+
+  @AllowNull(false)
+  @Column
+  weekDay!: Week
 
 }
 

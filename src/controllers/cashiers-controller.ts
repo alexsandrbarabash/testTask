@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
-import Cashier from '../models/cashier'
-import { sequelize } from '../db';
 import { Repository } from 'sequelize-typescript';
 import { Op } from 'sequelize';
+import moment from 'moment';
+import Cashier from '../models/cashier'
+import { sequelize } from '../db';
 import { getOptionForFind } from '../utils';
+import { Shift, Week } from '../const';
 
 class CashiersController {
   private cashierRepository: Repository<Cashier>
@@ -37,7 +39,7 @@ class CashiersController {
   }
 
   async createCashiers(req: Request, res: Response) {
-    await this.cashierRepository.create({...req.body});
+    await this.cashierRepository.create(req.body);
     return res.json('Ok');
   }
 
@@ -49,6 +51,35 @@ class CashiersController {
   async deleteCashiers(req: Request, res: Response) {
     await this.cashierRepository.destroy({where: {id: req.params.id}});
     return res.json('Ok');
+  }
+
+  async getTargetCashiersFirst1(res: Response) {
+
+    const data = await this.cashierRepository.findAll({
+      where: {
+        shop: 'ATB',
+        previousWork: {[Op.in]: ['Silpo', 'Arsen']},
+        startWorking: {
+          [Op.lte]: moment().subtract(5, 'years').format('YYYY-MM-DD')
+        }
+      }
+    });
+
+    return res.json(data);
+  }
+
+  async getTargetCashiers2(res: Response) {
+    const data = await this.cashierRepository.findAll({
+      where: {
+        shop: 'ATB',
+        address: 'Шевенка 100',
+        isEvenDay: false,
+        weekDay: Week.Monday,
+        shift: Shift.Night
+      }
+    });
+
+    return res.json(data);
   }
 }
 
