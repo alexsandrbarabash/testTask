@@ -71,4 +71,4 @@ DB_NAME=cashiers-in-shop
 PORT=3000
 ```
 
-and then write `npm run start`
+### and then write `npm run start`
