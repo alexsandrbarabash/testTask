@@ -15,7 +15,7 @@ router.get('/',
     return CashiersController.getAllCashiers(req, res);
   });
 
-router.get('getOne/:id', (req: Request, res: Response) => {
+router.get('/getOne/:id', (req: Request, res: Response) => {
   return CashiersController.getCashier(req, res);
 });
 
